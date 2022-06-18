@@ -16,6 +16,24 @@ a {
 }
 
 table, th, td {
-  border: 1px solid;
   border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  height: 10px;
+  border-left: 1px solid #00000010;
+  border-right: 1px solid #00000010;
+  text-align: center;
+}
+
+th {
+  border-bottom: 1px solid #00000010;
+}
+
+tr:nth-child(4n) {
+  border-bottom: 1px solid #00000010;
 }

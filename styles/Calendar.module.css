@@ -1,0 +1,19 @@
+.marked0 {
+  background-color: greenyellow;
+}
+
+.marked1 {
+  background-color: yellow;
+}
+
+.marked2 {
+  background-color: red;
+}
+
+.titleContainer {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+}

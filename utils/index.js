@@ -9,3 +9,5 @@ export const getCurrentUser = () => {
 export const setCurrentUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user))
 }
+
+export const garr = (length) => Array.apply(null, Array(length))
