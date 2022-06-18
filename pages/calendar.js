@@ -9,7 +9,7 @@ export default function Calendar(){
   useEffect(() => {  
     (async () => {
       const user = getCurrentUser();
-      const response = await axios.post(`${process.env.API_URL}`, { user });
+      const response = await axios.post(`${process.env.API_URL}/calendar.php`, { user });
       if (response.status == 200) {
         setEvents(response.data)
       }
