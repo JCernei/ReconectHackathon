@@ -10,10 +10,103 @@
   background-color: red;
 }
 
+.markedNew {
+  background-color: #8a90d6;
+  color: #fff;
+}
+
 .titleContainer {
   position: relative;
+  width: 100%;
 }
 
 .title {
+  text-align: left;
   position: absolute;
+  width: 100%;
+}
+
+.wrapper {
+  /* padding: 24px; */
+  padding-top: 24px;
+  /* display: flex; */
+  width: 100vw;
+  height: 100vh;
+}
+
+.cellRelative {
+  position: relative;
+}
+
+.hour {
+  position: absolute;
+  background-color: white;
+  top: -15px;
+  width: 25px;
+  text-align: right;
+  padding-right: 8px;
+  color: #00000090;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+  padding: 0 24px;
+  
+  padding-bottom: 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.headerLeft > * {
+  margin-right: 16px;
+}
+
+.headerLeft {
+  display: flex;
+  font-size: 18px;
+  font-weight: 700;
+  align-items: center;
+}
+
+.button {
+  background-color: #00000015;
+  padding: .5rem 1rem;
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #00000025;
+}
+
+.leftSide {
+  flex: 1 1 auto;
+  height: 100%;
+  
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightSide {
+  margin-left: 24px;
+  /* padding-right: 24px; */
+}
+
+.tableContainer {
+  overflow-x: scroll;
+  /* height: 100%; */
+  flex: 1 1 auto;
+}
+
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  height: calc(100% - 59px);
 }

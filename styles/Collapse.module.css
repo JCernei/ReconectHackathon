@@ -1,0 +1,15 @@
+.root {
+  transition: .25s;
+  /* overflow: hidden; */
+  height: 100%;
+  padding-bottom: 24px;
+}
+
+.open {
+  width: 350px;
+  margin-right: 24px;
+}
+
+.closed {
+  width: 0;
+}

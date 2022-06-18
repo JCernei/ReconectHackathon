@@ -1,0 +1,30 @@
+.root {
+  background-color: #00000010;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 1.25rem;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.light {
+  background-color: #fff;
+  color: #8a90d6;
+}
+
+.dark {
+  background-color: #8a90d6;
+  color: #fff
+}
+
+.light:hover {
+  background-color: #f1f1f1;
+}
+
+.dark:hover {
+  background-color: #7076b8;
+}

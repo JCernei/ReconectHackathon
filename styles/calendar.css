@@ -1,0 +1,21 @@
+td:nth-child(1) {
+  width: 35px;
+  border: none;
+}
+
+th:nth-child(1) {
+  border-left: none;
+}
+
+th {
+  height: 45px;
+}
+
+tr:last-child > td:first-child {
+  border: none;
+}
+
+td:hover {
+  background-color: #8a90d6;
+  cursor: pointer;
+}
