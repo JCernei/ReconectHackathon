@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    API_URL: 'http://api.hackathon.example'
+    API_URL: process.env.API_URL || '/api',
   }
 }
 
