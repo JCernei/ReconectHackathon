@@ -46,6 +46,7 @@ export default function Calendar() {
     setMagicScreenOpen(true)
     const user = getCurrentUser();
     const res = await axios.post(`/magic.php`, { user })
+    console.log(res.data)
 
     // const res = {
     //   status: 200,
@@ -77,7 +78,7 @@ export default function Calendar() {
     let firstDateOfWeek = moment(date).subtract(d, 'days').format('YYYY-MM-DD')
     setDate(firstDateOfWeek)
 
-    setCurrentUser({ username: 'alpha', password: '1111' })
+    // setCurrentUser({ username: 'alpha', password: '1111' })
 
     // generate days
     let ds = {}
@@ -90,7 +91,7 @@ export default function Calendar() {
       const user = getCurrentUser();
       const date = moment().format();
       const res = await axios.post(`/calendar.php`, { user, date });
-
+      console.log(res.data);
       // const res = {
       //   status: 200,
       //   data: [
