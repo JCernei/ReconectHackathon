@@ -6,8 +6,11 @@ import styles from '../styles/Calendar.module.css'
 import Collapse from '../components/Collapse';
 import EventBox from '../components/EventBox';
 import Button from '../components/Button';
-
+import Wrapper from '../components/Wrapper';
+import { IconButton, Tooltip } from '@mui/material';
 // moment(days[index1]).add(index * 15, 'minutes').format('DD HH:mm')
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
 // moment.updateLocale('en', {
 //   week : {
@@ -117,24 +120,23 @@ export default function Calendar() {
   }
 
   return (
+    <Wrapper>
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <div>
             {moment(date).format('MMMM YYYY')}
           </div>
-          <div
-            onClick={e => setDate(moment(date).subtract(7, 'days').format('YYYY-MM-DD'))}
-            className={styles.button}
-          >
-            {'< Prev'}
-          </div>
-          <div
-            onClick={e => setDate(moment(date).add(7, 'days').format('YYYY-MM-DD'))}
-            className={styles.button}
-          >
-            {'Next >'}
-          </div>
+          <Tooltip title="Previous week">
+            <IconButton onClick={e => setDate(moment(date).subtract(7, 'days').format('YYYY-MM-DD'))}>
+              <ArrowBackIosRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Next week">
+            <IconButton onClick={e => setDate(moment(date).add(7, 'days').format('YYYY-MM-DD'))}>
+              <ArrowForwardIosRoundedIcon />
+            </IconButton>
+          </Tooltip>
         </div>
         <div>
           <Button
@@ -225,5 +227,6 @@ export default function Calendar() {
         </div>
       </div>
     </div>
+    </Wrapper>
   )
 }
