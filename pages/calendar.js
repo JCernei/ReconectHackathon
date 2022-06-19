@@ -11,6 +11,7 @@ import { IconButton, Tooltip } from '@mui/material';
 // moment(days[index1]).add(index * 15, 'minutes').format('DD HH:mm')
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import MagicScreen from '../components/MagicScreen';
 
 // moment.updateLocale('en', {
 //   week : {
@@ -28,6 +29,9 @@ export default function Calendar() {
   const [rightSideOpen, setRightSideOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const [focusedInput, setFocusedInput] = useState('start');
+  const [magicScreenOpen, setMagicScreenOpen] = useState(false);
+  const [magicSCreenLoading, setMagicScreenLoading] = useState(false);
+  const [magicEvent, setMagicEvent] = useState({});
 
   const sumbit = async () => {
     const user = getCurrentUser()
@@ -38,14 +42,28 @@ export default function Calendar() {
   }
 
   const magic = async () => {
+    setMagicScreenLoading(true)
+    setMagicScreenOpen(true)
     const user = getCurrentUser();
     const res = await axios.post(`/magic.php`, { user })
+
+    // const res = {
+    //   status: 200,
+    //   data: {
+    //     start: '2022-06-18 14:00',
+    //     end: '2022-06-18 15:30',
+    //     fn: ['user1', 'user2']
+    //   }
+    // }
 
     if (res.status == 200) {
       console.log(`[x]`, res.data);
     } else {
       console.log(`[x]`, res.status)
     }
+
+    setMagicEvent(res.data)
+    setMagicScreenLoading(false)
   }
 
   useEffect(() => {
@@ -113,119 +131,126 @@ export default function Calendar() {
       }
       
     })()
-  }, [date, formData])
+  }, [date, formData, magicEvent])
 
   if (loading) {
     return <div style={{ display: 'flex', width: '100vw', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
   }
   return (
     <Wrapper>
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <div>
-            {moment(date).format('MMMM YYYY')}
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <div>
+              {moment(date).format('MMMM YYYY')}
+            </div>
+            <Tooltip title="Previous week">
+              <IconButton onClick={e => setDate(moment(date).subtract(7, 'days').format('YYYY-MM-DD'))}>
+                <ArrowBackIosRoundedIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Next week">
+              <IconButton onClick={e => setDate(moment(date).add(7, 'days').format('YYYY-MM-DD'))}>
+                <ArrowForwardIosRoundedIcon />
+              </IconButton>
+            </Tooltip>
           </div>
-          <Tooltip title="Previous week">
-            <IconButton onClick={e => setDate(moment(date).subtract(7, 'days').format('YYYY-MM-DD'))}>
-              <ArrowBackIosRoundedIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Next week">
-            <IconButton onClick={e => setDate(moment(date).add(7, 'days').format('YYYY-MM-DD'))}>
-              <ArrowForwardIosRoundedIcon />
-            </IconButton>
-          </Tooltip>
+          <div>
+            <Button
+              onClick={() => magic()}
+            >
+              Magic
+            </Button>
+          </div>
         </div>
-        <div>
-          <Button
-            onClick={() => magic()}
-          >
-            Magic
-          </Button>
-        </div>
-      </div>
-      <div className={styles.content}>
-        <div className={styles.leftSide}>
-          <div className={styles.tableContainer}>
-            <table>
-              <thead>
-                <tr>
-                  {garr(8).map((day, index) => {
-                    return (
-                      <th>
-                        <div style={{ position: 'relative', height: '100%' }}>
-                          <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-                            <div>{index ? moment(days[index-1]).format('DD') : ''}</div>
-                            <div style={{ color: '#00000050' }} >{index ? moment(days[index-1]).format('ddd') : ''}</div>
-                          </div>
-                        </div>
-                      </th>
-                    )
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {Array.apply(null, Array(97)).map((v, index) => (
-                  <tr key={index}>
-                    {Array.apply(null, Array(8)).map((x, index1) => {
-                      if (index1 == 0 && index % 4 == 0) {
-                        return (
-                          <td key={index1}>
-                            <div className={styles.cellRelative}>
-                              <div className={styles.hour}>{moment(days[0]).add(index * 15, 'minutes').format('HH')}</div>
-                            </div>
-                          </td>
-                        )
-                      }
-
-                      let time = moment(days[index1 - 1]).add(index * 15, 'minutes').format();
-
+        <div className={styles.content}>
+          <div className={styles.leftSide}>
+            <div className={styles.tableContainer}>
+              <table>
+                <thead>
+                  <tr>
+                    {garr(8).map((day, index) => {
                       return (
-                        <td
-                          className={cells[time] ? cells[time].new ? styles.markedNew : ( cells[time].tip == 0 ? styles.marked0 : ( cells[time].tip == 1 ? styles.marked1 : styles.marked2 ) ) : ''}
-                          key={index1}
-                          onClick={e => {
-                            // console.log(`[x]`, moment(days[index1 - 1]).add(index * 15, 'minutes').format('HH:mm'))
-                            setFormData({ ...formData, new: true, [focusedInput]: moment(days[index1 - 1]).add(index * 15, 'minutes').format('YYYY-MM-DD HH:mm:ss') })
-                            setRightSideOpen(true)
-                            setFocusedInput('end')
-                          }}
-                        >
-                          {titles[time] ? (
-                            <div className={styles.titleContainer}>
-                              <div className={styles.title}>
-                                {titles[time]}
-                              </div>
+                        <th>
+                          <div style={{ position: 'relative', height: '100%' }}>
+                            <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+                              <div>{index ? moment(days[index-1]).format('DD') : ''}</div>
+                              <div style={{ color: '#00000050' }} >{index ? moment(days[index-1]).format('ddd') : ''}</div>
                             </div>
-                          ) : ''}
-                          {/* {moment(days[index1]).add(index * 15, 'minutes').format('DD HH:mm')} */}
-                        </td>
+                          </div>
+                        </th>
                       )
                     })}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {Array.apply(null, Array(97)).map((v, index) => (
+                    <tr key={index}>
+                      {Array.apply(null, Array(8)).map((x, index1) => {
+                        if (index1 == 0 && index % 4 == 0) {
+                          return (
+                            <td key={index1}>
+                              <div className={styles.cellRelative}>
+                                <div className={styles.hour}>{moment(days[0]).add(index * 15, 'minutes').format('HH')}</div>
+                              </div>
+                            </td>
+                          )
+                        }
+
+                        let time = moment(days[index1 - 1]).add(index * 15, 'minutes').format();
+
+                        return (
+                          <td
+                            className={cells[time] ? cells[time].new ? styles.markedNew : ( cells[time].tip == 0 ? styles.marked0 : ( cells[time].tip == 1 ? styles.marked1 : styles.marked2 ) ) : ''}
+                            key={index1}
+                            onClick={e => {
+                              // console.log(`[x]`, moment(days[index1 - 1]).add(index * 15, 'minutes').format('HH:mm'))
+                              setFormData({ ...formData, new: true, [focusedInput]: moment(days[index1 - 1]).add(index * 15, 'minutes').format('YYYY-MM-DD HH:mm:ss') })
+                              setRightSideOpen(true)
+                              setFocusedInput('end')
+                            }}
+                          >
+                            {titles[time] ? (
+                              <div className={styles.titleContainer}>
+                                <div className={styles.title}>
+                                  {titles[time]}
+                                </div>
+                              </div>
+                            ) : ''}
+                            {/* {moment(days[index1]).add(index * 15, 'minutes').format('DD HH:mm')} */}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className={styles.rightSide}>
+            <Collapse open={rightSideOpen}>
+              <EventBox
+                onClose={e => {
+                  setRightSideOpen(false)
+                  setFormData({})
+                }}
+                event={formData}
+                onEventChange={formData => setFormData(formData)}
+                focusedInput={focusedInput}
+                onInputFocus={input => setFocusedInput(input)}
+                onSubmit={e => sumbit()}
+              />
+            </Collapse>
           </div>
         </div>
-        <div className={styles.rightSide}>
-          <Collapse open={rightSideOpen}>
-            <EventBox
-              onClose={e => {
-                setRightSideOpen(false)
-                setFormData({})
-              }}
-              event={formData}
-              onEventChange={formData => setFormData(formData)}
-              focusedInput={focusedInput}
-              onInputFocus={input => setFocusedInput(input)}
-              onSubmit={e => sumbit()}
-            />
-          </Collapse>
-        </div>
       </div>
-    </div>
+
+      <MagicScreen
+        event={magicEvent}
+        open={magicScreenOpen}
+        onClose={e => setMagicScreenOpen(false)}
+        loading={magicSCreenLoading}
+      />
     </Wrapper>
   )
 }
