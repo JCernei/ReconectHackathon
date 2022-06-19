@@ -1,15 +1,11 @@
-export default function Hello({ test }){
+import Wrapper from '../components/Wrapper';
+
+export default function Friends(){
     return(
-        <h1>Hello world, {test} </h1>
+      <Wrapper>
+        <h1>Hello world </h1>
+        
+      </Wrapper>
     )
 }
-
-export async function getServerSideProps(context) {
-
-    return {
-      props: {
-        test: `asd`
-      }, // will be passed to the page component as props
-    }
-  }
   

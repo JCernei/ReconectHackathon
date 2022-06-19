@@ -24,6 +24,8 @@ import {
   StoreRounded as StoreRoundedIcon,
 } from '@mui/icons-material';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
+import {setCurrentUser} from '../utils'
+// import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 // import CustomLink from 'components/CustomLink';
 
 const drawerWidth = 240;
@@ -60,7 +62,8 @@ export default function LeftMenu ({ open = false }) {
   const classes = useStyles();
 
   const handleSignOut = async () => {
-    
+    setCurrentUser({})
+    window.location = '/'
   }
 
   return (
@@ -91,6 +94,15 @@ export default function LeftMenu ({ open = false }) {
                 <EventNoteRoundedIcon />
               </ListItemIcon>
               <ListItemText primary="Calendar" />
+            </ListItem>
+          </Link>
+
+          <Link href="/friends">
+            <ListItem button>
+              <ListItemIcon>
+                <GroupRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Friends" />
             </ListItem>
           </Link>
 

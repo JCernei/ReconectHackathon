@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import Login from './components/Login'
+import LoginForm from './LoginForm'
 
 export default function Home() {
 
@@ -14,7 +14,7 @@ export default function Home() {
   // console.log(process.env.API_URL)
   return (
     <div>
-      <Login/>
+      <LoginForm/>
     </div>
   )
 }

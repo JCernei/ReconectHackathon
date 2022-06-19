@@ -11,7 +11,7 @@ import { ThemeProvider as ThemeProvider5 } from '@mui/material/styles';
 
 axios.interceptors.request.use((config) => {
   if (!config.headers['x-test']) {
-    console.log(`testtest`)
+    // console.log(`testtest`)
     config.url = `/api/proxy?url=${encodeURIComponent(config.url)}`
   }
     return config;

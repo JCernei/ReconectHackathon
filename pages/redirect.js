@@ -23,9 +23,7 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/friends"
-            
-          >
+            href="/friends">
             <a className="card">
             <h2>Friends &rarr;</h2>
             </a>

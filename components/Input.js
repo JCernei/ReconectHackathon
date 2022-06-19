@@ -5,7 +5,7 @@ const Input = ({ value, onChange, label, onFocus = () => {}, focused, autoFocus 
     <div className={classes.root}>
       {label ? <div className={classes.label}>{label}{focused ? <span>&bull; choose on calendar</span> : ''}</div> : ''}
       <input
-        value={value}
+        value={value || ''}
         onChange={e => onChange(e.target.value)}
         className={classes.input}
         onFocus={onFocus}

@@ -85,7 +85,7 @@ export default function Calendar() {
         const envts = {};
         const ttles = {};
 
-        [...res.data, ...(formData.start && formData.end ? [formData] : [formData])].map(event => {
+        [...res.data, ...(formData.start || formData.end ? [formData] : [])].map(event => {
           let startMinute = moment(event.start).minute();
 
           if (![0, 15, 30, 45].includes(startMinute)) {
@@ -118,7 +118,6 @@ export default function Calendar() {
   if (loading) {
     return <div style={{ display: 'flex', width: '100vw', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
   }
-
   return (
     <Wrapper>
     <div className={styles.wrapper}>
